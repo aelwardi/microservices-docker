@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Remplacez par l'URL exacte du frontend
+  origin: 'http://localhost:3001', // Remplacez par l'URL exacte du frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
