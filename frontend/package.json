@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "serve": "npx vite --host 0.0.0.0",
     "start": "node server.cjs",
     "dev": "npx vite",
     "build": "npx vite build",
