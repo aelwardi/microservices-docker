@@ -9,13 +9,15 @@ COPY . .
 RUN npm run build
 
 
-FROM nginx:alpine
+FROM node:20-alpine
 
-COPY --from=build /app/dist /usr/share/nginx/html
+WORKDIR /app
 
-# Copie la configuration personnalisée de Nginx si besoin
-# COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/server.cjs ./server.cjs
+COPY package*.json ./
+RUN npm install --production
 
 EXPOSE 8080
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "server.cjs"]
