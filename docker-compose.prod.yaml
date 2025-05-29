@@ -1,127 +1,107 @@
 version: "3.9"
 services:
   mongodb:
-      image: mongo:6
-      container_name: mongodb
-      ports:
-        - "27017:27017"
-      volumes:
-        - mongodb_data:/data/db
-      healthcheck:
-        test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-        interval: 10s
-        timeout: 5s
-        retries: 5
-      networks:
-        - backend
+    image: mongo:6
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-      target: development
+      target: production
     container_name: frontend
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     ports:
       - "8080:8080"
-    env_file:
-      - ./frontend/.env
-    depends_on:
-      product-service:
-        condition: service_healthy
-        restart: true
-      auth-service:
-        condition: service_healthy
-        restart: true
-      order-service:
-        condition: service_healthy
-        restart: true
     networks:
       - frontend
       - backend
+    env_file:
+      - ./frontend/.env.production
+    depends_on:
+      product-service:
+        condition: service_healthy
+      auth-service:
+        condition: service_healthy
+      order-service:
+        condition: service_healthy
 
   product-service:
     build: 
       context: ./services/product-service
       dockerfile: Dockerfile
-      target: development
+      target: production
     container_name: product-service
-    volumes:
-      - ./services/product-service:/app
-      - /app/node_modules
     ports:
       - "3000:3000"
     depends_on:
       mongodb:
         condition: service_healthy
-        restart: true
+    networks:
+      - backend
     env_file:
-      - ./services/product-service/.env
+      - ./services/product-service/.env.production
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"] 
       interval: 1m30s
       timeout: 30s
       retries: 5
       start_period: 30s
-    networks:
-      - backend
 
   auth-service:
     build: 
       context: ./services/auth-service
       dockerfile: Dockerfile
-      target: development
+      target: production
     container_name: auth-service
-    volumes:
-      - ./services/auth-service:/app
-      - /app/node_modules
     ports:
       - "3001:3001"
     depends_on:
       mongodb:
         condition: service_healthy
-        restart: true
+    networks:
+      - backend
     env_file:
-      - ./services/auth-service/.env
+      - ./services/auth-service/.env.production
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3001/api/health"]
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3001/api/health"] 
       interval: 1m30s
       timeout: 30s
       retries: 5
       start_period: 30s
-    networks:
-      - backend
 
   order-service:
     build: 
       context: ./services/order-service
       dockerfile: Dockerfile
-      target: development
+      target: production
     container_name: order-service
-    volumes:
-      - ./services/order-service:/app
-      - /app/node_modules
     ports:
       - "3002:3002"
     depends_on:
       mongodb:
         condition: service_healthy
-        restart: true
+    networks:
+      - backend
     env_file:
-      - ./services/order-service/.env
+      - ./services/order-service/.env.production
     healthcheck:
-      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3002/api/health"]
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3002/api/health"] 
       interval: 1m30s
       timeout: 30s
       retries: 5
       start_period: 30s
-    networks:
-      - backend
 
 networks:
   frontend:
   backend:
-
 volumes:
   mongodb_data:

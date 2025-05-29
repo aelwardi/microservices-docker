@@ -1,12 +1,25 @@
-FROM node:20-alpine AS build
+FROM node:20-alpine AS base
 WORKDIR /app
 COPY package*.json ./
+
+FROM base AS development
+ENV NODE_ENV=development
 RUN npm install
 COPY . .
-
-FROM build AS production
-WORKDIR /app
-COPY --from=build /app ./
 EXPOSE 3001
+CMD ["npm", "run", "dev"]
 
+FROM base AS build
+ENV NODE_ENV=production
+RUN npm ci --omit=dev
+COPY . .
+RUN npm run build
+
+FROM node:20-alpine AS production
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=build /app ./
+RUN addgroup -S gelwardi && adduser -S elwardi -G gelwardi
+USER elwardi
+EXPOSE 3001
 CMD ["node", "src/app.js"]
