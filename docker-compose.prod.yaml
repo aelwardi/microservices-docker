@@ -16,7 +16,11 @@ services:
       retries: 5
 
   frontend:
-    image: aelwardi1/e-commerce-frontend:latest
+    image: aelwardi1/e-commerce-frontend:${IMAGE_TAG:-latest}
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
     ports:
       - "8080:8080"
     networks:
@@ -30,7 +34,11 @@ services:
       - order-service
 
   product-service:
-    image: aelwardi1/e-commerce-product-service:latest
+    image: aelwardi1/e-commerce-product-service:${IMAGE_TAG:-latest}
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
     ports:
       - "3000:3000"
     depends_on:
@@ -47,7 +55,11 @@ services:
       start_period: 30s
 
   auth-service:
-    image: aelwardi1/e-commerce-auth-service:latest
+    image: aelwardi1/e-commerce-auth-service:${IMAGE_TAG:-latest}
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
     ports:
       - "3001:3001"
     depends_on:
@@ -64,7 +76,11 @@ services:
       start_period: 30s
 
   order-service:
-    image: aelwardi1/e-commerce-order-service:latest
+    image: aelwardi1/e-commerce-order-service:${IMAGE_TAG:-latest}
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
     ports:
       - "3002:3002"
     depends_on:
