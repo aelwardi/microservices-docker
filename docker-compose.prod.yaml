@@ -1,0 +1,103 @@
+version: "3.9"
+services:
+  mongodb:
+    image: mongo:6
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    image: aelwardi1/e-commerce-frontend:${IMAGE_TAG:-latest}
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "8080:8080"
+    networks:
+      - frontend
+      - backend
+    env_file:
+      - ./frontend/.env.production
+    depends_on:
+      - product-service
+      - auth-service
+      - order-service
+
+  product-service:
+    image: aelwardi1/e-commerce-product-service:${IMAGE_TAG:-latest}
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    networks:
+      - backend
+    env_file:
+      - ./services/product-service/.env.production
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3000/api/health"] 
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+  auth-service:
+    image: aelwardi1/e-commerce-auth-service:${IMAGE_TAG:-latest}
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongodb
+    networks:
+      - backend
+    env_file:
+      - ./services/auth-service/.env.production
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3001/api/health"] 
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+  order-service:
+    image: aelwardi1/e-commerce-order-service:${IMAGE_TAG:-latest}
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mongodb
+    networks:
+      - backend
+    env_file:
+      - ./services/order-service/.env.production
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3002/api/health"] 
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+
+networks:
+  frontend:
+  backend:
+volumes:
+  mongodb_data:
