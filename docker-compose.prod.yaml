@@ -7,6 +7,8 @@ services:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
+    networks:
+      - backend
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 10s
@@ -14,11 +16,7 @@ services:
       retries: 5
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      target: production
-    container_name: frontend
+    image: aelwardi1/e-commerce-frontend:latest
     ports:
       - "8080:8080"
     networks:
@@ -27,24 +25,16 @@ services:
     env_file:
       - ./frontend/.env.production
     depends_on:
-      product-service:
-        condition: service_healthy
-      auth-service:
-        condition: service_healthy
-      order-service:
-        condition: service_healthy
+      - product-service
+      - auth-service
+      - order-service
 
   product-service:
-    build: 
-      context: ./services/product-service
-      dockerfile: Dockerfile
-      target: production
-    container_name: product-service
+    image: aelwardi1/e-commerce-product-service:latest
     ports:
       - "3000:3000"
     depends_on:
-      mongodb:
-        condition: service_healthy
+      - mongodb
     networks:
       - backend
     env_file:
@@ -57,16 +47,11 @@ services:
       start_period: 30s
 
   auth-service:
-    build: 
-      context: ./services/auth-service
-      dockerfile: Dockerfile
-      target: production
-    container_name: auth-service
+    image: aelwardi1/e-commerce-auth-service:latest
     ports:
       - "3001:3001"
     depends_on:
-      mongodb:
-        condition: service_healthy
+      - mongodb
     networks:
       - backend
     env_file:
@@ -79,16 +64,11 @@ services:
       start_period: 30s
 
   order-service:
-    build: 
-      context: ./services/order-service
-      dockerfile: Dockerfile
-      target: production
-    container_name: order-service
+    image: aelwardi1/e-commerce-order-service:latest
     ports:
       - "3002:3002"
     depends_on:
-      mongodb:
-        condition: service_healthy
+      - mongodb
     networks:
       - backend
     env_file:

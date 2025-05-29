@@ -19,7 +19,7 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/server.cjs ./server.cjs
 COPY --from=build /app/package*.json ./
 RUN npm ci --only=production
-RUN addgroup -S gelwardi && adduser -S elwardi -G gelwardi && chown -R elwardi:gelwardi /app
-USER elwardi
+RUN addgroup -S gelwardi && adduser -S elwardi1 -G gelwardi && chown -R elwardi1:gelwardi /app
+USER elwardi1
 EXPOSE 8080
 CMD ["node", "server.cjs"]

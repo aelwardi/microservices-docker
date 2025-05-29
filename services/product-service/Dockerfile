@@ -19,7 +19,7 @@ FROM node:20-alpine AS production
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=build /app ./
-RUN addgroup -S gelwardi && adduser -S elwardi -G gelwardi
-USER elwardi
+RUN addgroup -S gelwardi && adduser -S elwardi1 -G gelwardi
+USER elwardi1
 EXPOSE 3000
 CMD ["node", "src/app.js"]

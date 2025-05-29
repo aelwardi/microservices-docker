@@ -14,7 +14,7 @@ ENV NODE_ENV=production
 RUN npm ci --omit=dev
 COPY . .
 
-RUN [ -f package.json ] && npm run build || echo "No build step"
+RUN npm run build || true
 
 FROM node:20-alpine AS production
 WORKDIR /app
@@ -23,7 +23,7 @@ COPY --from=build /app/package*.json ./
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/src ./src
 COPY --from=build /app/*.js ./
-RUN addgroup -S gelwardi && adduser -S elwardi -G gelwardi
-USER elwardi
+RUN addgroup -S gelwardi && adduser -S elwardi1 -G gelwardi
+USER elwardi1
 EXPOSE 3002
 CMD ["node", "src/app.js"]

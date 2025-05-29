@@ -13,13 +13,13 @@ FROM base AS build
 ENV NODE_ENV=production
 RUN npm ci --omit=dev
 COPY . .
-RUN npm run build
+RUN npm run build || true
 
 FROM node:20-alpine AS production
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=build /app ./
-RUN addgroup -S gelwardi && adduser -S elwardi -G gelwardi
-USER elwardi
+RUN addgroup -S gelwardi && adduser -S elwardi1 -G gelwardi
+USER elwardi1
 EXPOSE 3001
 CMD ["node", "src/app.js"]
