@@ -1,4 +1,5 @@
-39d7d45 2025-05-29 | add images to dockerhub and deploy app with docker swarm (HEAD -> aelwardi, origin/aelwardi) [aelwardi]
+4b5c03b 2025-05-29 | project finit - je doit le faire hors windows dans MV pour le finaliser et faire le README.md (HEAD -> aelwardi) [aelwardi]
+39d7d45 2025-05-29 | add images to dockerhub and deploy app with docker swarm (origin/aelwardi) [aelwardi]
 7a9df12 2025-05-29 | bonne pratique et user non-root [aelwardi]
 c2d8a4d 2025-05-28 | multi-stage [aelwardi]
 8cb48f0 2025-05-28 | amélioration [aelwardi]
