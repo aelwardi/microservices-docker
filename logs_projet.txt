@@ -1,4 +1,7 @@
-8cb48f0 2025-05-28 | amélioration (HEAD -> aelwardi, origin/aelwardi) [aelwardi]
+39d7d45 2025-05-29 | add images to dockerhub and deploy app with docker swarm (HEAD -> aelwardi, origin/aelwardi) [aelwardi]
+7a9df12 2025-05-29 | bonne pratique et user non-root [aelwardi]
+c2d8a4d 2025-05-28 | multi-stage [aelwardi]
+8cb48f0 2025-05-28 | amélioration [aelwardi]
 c007b77 2025-05-28 | config server.cjs [aelwardi]
 71dc1bf 2025-05-28 | v4 [aelwardi]
 85b7b38 2025-05-28 | v3 [aelwardi]
