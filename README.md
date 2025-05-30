@@ -2,20 +2,22 @@
 
 ## Table des Matières
 
-[Introduction Générale](#-ntroduction-generale)
-[Chapitre 1 : Contexte général et enjeux du projet](#chapitre-1)
-   - [Contexte du projet](#contexte-projet)
-   - [Microservices](#microservices)
-   - [Architecture](#architecture)
-[Chapitre 2 : Création d'un Dockerfile pour chaque microservice et présentation des fichiers d'environnement](#chapitre-2)
-   - [FrontEnd — Préparation et Dockerisation](#front-end)
-   - [BackEnd — Préparation et Dockerisation](#back-end)
-   - [Bilan et justification des choix techniques](#bilan-justification-choix-techniques)
-[Chapitre 3 : Création des images, publication sur Docker Hub et gestion via Docker Compose](#chapitre-3)
-   - [Création des images, publication sur Docker Hub](#creation-images-publication-docker-hub)
-   - [Création des fichiers Docker Compose](#creation-fichiers-docker-compose)
-[ Chapitre 4 : Configuration et déploiement par différentes méthodes && Démonstration et validation du fonctionnement de la solution](#chapitre-4)
-   - [Préparation de l'environnement](#preparation-environnement)
+- [Introduction Générale](#introduction-générale)
+- [Chapitre 1 : Contexte général et enjeux du projet](#chapitre-1--contexte-général-et-enjeux-du-projet)
+  - [Contexte du projet](#contexte-du-projet)
+  - [Microservices](#microservices)
+  - [Architecture](#architecture)
+- [Chapitre 2 : Création d'un Dockerfile pour chaque microservice et présentation des fichiers d'environnement](#chapitre-2--création-dun-dockerfile-pour-chaque-microservice-et-présentation-des-fichiers-denvironnement)
+  - [FrontEnd — Préparation et Dockerisation](#frontend--préparation-et-dockerisation)
+  - [BackEnd — Préparation et Dockerisation](#backend--préparation-et-dockerisation)
+  - [Bilan et justification des choix techniques](#bilan-et-justification-des-choix-techniques)
+- [Chapitre 3 : Création des images, publication sur Docker Hub et gestion via Docker Compose](#chapitre-3--création-des-images-publication-sur-docker-hub-et-gestion-via-docker-compose)
+  - [Création des images, publication sur Docker Hub](#création-des-images-publication-sur-docker-hub)
+  - [Création des fichiers Docker Compose](#création-des-fichiers-docker-compose)
+- [Chapitre 4 : Configuration et déploiement par différentes méthodes et démonstration](#chapitre-4--configuration-et-déploiement-par-différentes-méthodes-et-démonstration)
+  - [Développement local avec Docker Compose](#développement-local-avec-docker-compose)
+  - [Déploiement en production avec Docker Swarm](#déploiement-en-production-avec-docker-swarm)
+  - [Démonstration et validation du fonctionnement de la solution](#démonstration-et-validation-du-fonctionnement-de-la-solution)
 
 ---
 
@@ -894,10 +896,10 @@ Ce fichier est destiné à l’orchestration en production, idéalement avec Doc
 ## Chapitre 4 : Configuration et déploiement par différentes méthodes && Démonstration et validation du fonctionnement de la solution
 Dans ce chapitre, je détaille les différentes méthodes que j'ai utilisées pour configurer et déployer l'application, en commençant par l'environnement de développement basé sur Docker Compose. Cette approche garantit reproductibilité, isolation des services, et rapidité de mise en route.
 
-### Préparation de l'environnement
+### Développement local avec Docker Compose
 
-1. **Développement local avec Docker Compose :**
-***Étapes :***
+1. **Préparation de l'environnement :**
+**Étapes :**
 - ***Création d’un dossier de travail et clonage du dépôt :***
 ```bash
   mkdir test-dev
@@ -972,11 +974,79 @@ Puis retour à la racine du projet :
 ---
 - ***Bilan :***
 - Cette méthode permet de démarrer rapidement l'intégralité du projet sur n'importe quelle machine avec Docker installé, sans configuration manuelle des services ou des bases de données.
-- L'utilisation de `docker compose` garantit l'isolation, la portabilité et la facilité de maintenance, idéale pour le développement collaboratif ou les tests d’intégration.
+- L'utilisation de `docker compose` garantit l'isolation, la portabilité et la facilité de maintenance, idéale pour le développement collaboratif ou les tests d'intégration.
 
 ---
 
-2. **Déploiement en production avec Docker Swarm :**
+2. **Démonstration et validation du fonctionnement de la solution :**
+Pour valider le bon fonctionnement de l'application, j'ai réalisé une démonstration complète du parcours utilisateur, depuis l'inscription jusqu'à la gestion des commandes. Voici les étapes principales, accompagnées des captures d'écran à chaque étape clé.
+
+---
+- ***Accès à l'application :***
+- Récupération de l’adresse IP du serveur :
+```bash
+  ip a
+```
+- Ouverture de l’application dans le navigateur à l’adresse :  
+  `http://<votre-ip-de-hosts>:8080`
+
+---
+- ***Page d'authentification :***
+- La page d'authentification s'affiche.  
+  Saisir un email et un mot de passe pour s'inscrire.
+![Page d'authentification](demonstration/1.png)
+
+---
+- ***Inscription & redirection vers les produits :***
+- Après l'inscription, l'utilisateur est redirigé vers la page de liste des produits.
+- Dans la console du navigateur, on voit que l'inscription a réussi et que le token est affiché.
+
+![Redirection après inscription](demonstration/2.png)
+
+---
+- ***Déconnexion et reconnexion :***
+- Cliquer sur “Déconnexion” pour revenir à la page de connexion.
+- Entrer à nouveau l'email et le mot de passe, puis cliquer sur “Se connecter”.
+
+![Page de connexion](demonstration/3.png)
+
+- Après connexion, redirection vers la page des produits.  
+  Dans la console, le message “Connexion réussie” et le token sont visibles.
+
+![Connexion réussie](demonstration/4.png)
+
+---
+- ***Gestion du panier :***
+- Ajouter des produits dans le panier.
+- Cliquer sur l'icône du panier pour consulter, modifier ou valider le panier.
+
+![Panier](demonstration/5.png)
+
+---
+- ***Passer une commande :***
+- Cliquer sur “Passer la commande” puis remplir les informations de l'adresse de livraison.
+
+![Formulaire de commande](demonstration/6.png)
+
+- Cliquer sur “Confirmer la commande”.  
+  Pour voir l'historique, cliquer sur “Commandes” dans le menu.
+
+![Historique des commandes](demonstration/7.png)
+
+---
+- ***Arrêt de l'environnement :***
+- Pour arrêter tous les services et nettoyer l’environnement :
+```bash
+  docker compose down
+```
+
+---
+***Conclusion :***  
+Cette démonstration prouve que l'ensemble du parcours utilisateur fonctionne, depuis l'inscription jusqu'à la création et la consultation de commandes, en passant par l'authentification, la gestion du panier et la navigation sécurisée grâce aux tokens JWT.
+
+### Déploiement en production avec Docker Swarm
+
+1. **Préparation de l'environnement**
 Pour la production, j'ai choisi d'orchestrer l'ensemble des services avec **Docker Swarm**, ce qui permet de bénéficier de la haute disponibilité, de la montée en charge (scalabilité) et d’une gestion centralisée des conteneurs sur plusieurs machines si besoin.
 
 ---
@@ -1055,4 +1125,63 @@ Pour la production, j'ai choisi d'orchestrer l'ensemble des services avec **Dock
 ***Conclusion :*** 
 Grâce à Docker Swarm, le déploiement en production devient fiable, automatisé et scalable, tout en restant simple à piloter avec quelques commandes.
 
-.............
+2. **Démonstration et validation du fonctionnement de la solution :**
+Pour valider le bon fonctionnement de l'application, j'ai réalisé une démonstration complète du parcours utilisateur sur l'interface web, exposée par le frontend déployé sur le cluster Docker Swarm.
+
+- ***Vérification de l'adresse IP du serveur :***
+```bash
+  ip a
+```
+  - Récupérer l’adresse IP du serveur pour accéder à l’interface web.
+- ***Ouverture de l'application dans le navigateur :***
+  - Accéder à l’application via :  
+```
+  http://<IP-OU-DOMAINE-DU-SERVEUR>:8080
+```
+
+- ***Page d'authentification :***
+  - La page d'authentification s'affiche.  
+     Saisir un email et un mot de passe pour s'inscrire.
+  - ![image1](demonstration/1.png)
+
+- ***Inscription et redirection vers la liste des produits :***
+  - Après l'inscription, une redirection s'effectue vers la liste des produits.
+  - Dans la console navigateur, un message confirme la réussite de l'inscription et le token JWT est affiché.
+  - ![image2](demonstration/2.png)
+
+- ***Déconnexion et reconnexion :***
+  - Cliquer sur « Déconnexion », puis entrer à nouveau votre email et mot de passe, et cliquer sur « Se connecter ».
+  - ![image3](demonstration/3.png)
+
+- ***Connexion et accès à la page produits :***
+  - Après connexion, une redirection vers la page des produits s'effectue.
+  - Dans la console, « Connexion réussie » et le token sont affichés.
+  - ![image4](demonstration/4.png)
+
+- ***Ajout de produits au panier :***
+  - Ajouter des produits au panier, puis cliquer sur le panier pour consulter, modifier ou valider le contenu.
+  - ![image5](demonstration/5.png)
+
+- ***Passage et validation de la commande :***
+  - Cliquer sur « Passer la commande », remplir l'adresse de livraison.
+  - ![image6](demonstration/6.png)
+  - Cliquer sur « Confirmer la commande ».
+
+- ***Consultation de l'historique des commandes :***
+   - Cliquer sur « Commandes » pour consulter l'historique des commandes passées.
+   - ![image7](demonstration/7.png)
+
+---
+
+3. **Nettoyage et arrêt de la stack :**
+Pour terminer proprement la démonstration, arrêter tous les services et nettoyer l'environnement :
+```bash
+  docker stack rm e-commerce
+  docker swarm leave --force
+  docker volume prune
+```
+
+---
+***Conclusion :*** 
+Cette démonstration valide le fonctionnement complet de la plateforme, de l'inscription à la gestion des commandes, en passant par l'authentification, l'ajout au panier et la consultation de l'historique.  
+Chaque étape a été vérifiée visuellement (voir captures d'écran ci-dessus) et par les messages de succès affichés dans la console du navigateur.
