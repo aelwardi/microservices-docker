@@ -17,7 +17,6 @@
 - [Chapitre 4 : Configuration et déploiement par différentes méthodes et démonstration](#chapitre-4--configuration-et-déploiement-par-différentes-méthodes-et-démonstration)
   - [Développement local avec Docker Compose](#développement-local-avec-docker-compose)
   - [Déploiement en production avec Docker Swarm](#déploiement-en-production-avec-docker-swarm)
-  - [Démonstration et validation du fonctionnement de la solution](#démonstration-et-validation-du-fonctionnement-de-la-solution)
 
 ---
 
@@ -994,44 +993,44 @@ Pour valider le bon fonctionnement de l'application, j'ai réalisé une démonst
 - ***Page d'authentification :***
 - La page d'authentification s'affiche.  
   Saisir un email et un mot de passe pour s'inscrire.
-![Page d'authentification](demonstration/1.png)
+![Page d'authentification](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/1.PNG)
 
 ---
 - ***Inscription & redirection vers les produits :***
 - Après l'inscription, l'utilisateur est redirigé vers la page de liste des produits.
 - Dans la console du navigateur, on voit que l'inscription a réussi et que le token est affiché.
 
-![Redirection après inscription](demonstration/2.png)
+![Redirection après inscription](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/2.PNG)
 
 ---
 - ***Déconnexion et reconnexion :***
 - Cliquer sur “Déconnexion” pour revenir à la page de connexion.
 - Entrer à nouveau l'email et le mot de passe, puis cliquer sur “Se connecter”.
 
-![Page de connexion](demonstration/3.png)
+![Page de connexion](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/3.PNG)
 
 - Après connexion, redirection vers la page des produits.  
   Dans la console, le message “Connexion réussie” et le token sont visibles.
 
-![Connexion réussie](demonstration/4.png)
+![Connexion réussie](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/4.PNG)
 
 ---
 - ***Gestion du panier :***
 - Ajouter des produits dans le panier.
 - Cliquer sur l'icône du panier pour consulter, modifier ou valider le panier.
 
-![Panier](demonstration/5.png)
+![Panier](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/5.PNG)
 
 ---
 - ***Passer une commande :***
 - Cliquer sur “Passer la commande” puis remplir les informations de l'adresse de livraison.
 
-![Formulaire de commande](demonstration/6.png)
+![Formulaire de commande](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/6.PNG)
 
 - Cliquer sur “Confirmer la commande”.  
   Pour voir l'historique, cliquer sur “Commandes” dans le menu.
 
-![Historique des commandes](demonstration/7.png)
+![Historique des commandes](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/7.PNG)
 
 ---
 - ***Arrêt de l'environnement :***
@@ -1142,34 +1141,34 @@ Pour valider le bon fonctionnement de l'application, j'ai réalisé une démonst
 - ***Page d'authentification :***
   - La page d'authentification s'affiche.  
      Saisir un email et un mot de passe pour s'inscrire.
-  - ![image1](demonstration/1.png)
+  - ![image1](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/1.PNG)
 
 - ***Inscription et redirection vers la liste des produits :***
   - Après l'inscription, une redirection s'effectue vers la liste des produits.
   - Dans la console navigateur, un message confirme la réussite de l'inscription et le token JWT est affiché.
-  - ![image2](demonstration/2.png)
+  - ![image2](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/2.PNG)
 
 - ***Déconnexion et reconnexion :***
   - Cliquer sur « Déconnexion », puis entrer à nouveau votre email et mot de passe, et cliquer sur « Se connecter ».
-  - ![image3](demonstration/3.png)
+  - ![image3](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/3.PNG)
 
 - ***Connexion et accès à la page produits :***
   - Après connexion, une redirection vers la page des produits s'effectue.
   - Dans la console, « Connexion réussie » et le token sont affichés.
-  - ![image4](demonstration/4.png)
+  - ![image4](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/4.PNG)
 
 - ***Ajout de produits au panier :***
   - Ajouter des produits au panier, puis cliquer sur le panier pour consulter, modifier ou valider le contenu.
-  - ![image5](demonstration/5.png)
+  - ![image5](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/5.PNG)
 
 - ***Passage et validation de la commande :***
   - Cliquer sur « Passer la commande », remplir l'adresse de livraison.
-  - ![image6](demonstration/6.png)
+  - ![image6](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/6.PNG)
   - Cliquer sur « Confirmer la commande ».
 
 - ***Consultation de l'historique des commandes :***
    - Cliquer sur « Commandes » pour consulter l'historique des commandes passées.
-   - ![image7](demonstration/7.png)
+   - ![image7](https://github.com/aelwardi/microservices-docker/blob/main/demonstration/7.PNG)
 
 ---
 
